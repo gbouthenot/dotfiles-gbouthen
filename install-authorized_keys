@@ -1,0 +1,8 @@
+#!/bin/bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+DEST=~/.ssh/authorized_keys
+
+mkdir -p ~/.ssh
+chmod 700 ~/.ssh
+grep cle-de-gbouthen $DIR/authorized_keys_known >>$DEST
+mcedit $DEST
