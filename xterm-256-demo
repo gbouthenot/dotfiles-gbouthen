@@ -1,28 +1,17 @@
 #!/usr/bin/env bash
 #
 # Shows all 256 colors of xterm's 256-color mode.
-# Make sure your terminal is at least 108x47.
-# This script has been placed into the Public Domain by its author, J. S. Connell.
 #
 
-#clear
-
-column=1
-line=1
-xlimit=6    # nombre de colonnes à afficher
-ylimit=99   # nombre de lignes à afficher pour chaque bloc
-color=16    # couleur de début
+color=0
+while [ $color -lt 16 ]; do
+    printf "%3d: \x1B[48;5;%dm        \x1B[0m " $color $color
+    printf "%2d: \x1B[48;5;%dm        \x1B[0m " $[$color+1] $[$color+1]
+    color=$[$color+2]
+    if [ $[$color%8] -eq 0 ]; then echo; fi
+done
 while [ $color -lt 256 ]; do
     printf "%3d: \x1B[48;5;%dm            \x1B[0m " $color $color
     color=$[$color+1]
-    column=$[$column+1]
-    if [ $column -gt $xlimit ]; then
-        echo
-        column=1
-        line=$[$line+1]
-        if [ $line -gt $ylimit ]; then
-            echo
-            line=1
-        fi
-    fi
+    if [ $[($color-16)%6] -eq 0 ]; then echo; fi
 done
