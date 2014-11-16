@@ -42,4 +42,14 @@ fi
 # disable ^S / ^Q
 stty stop undef
 stty start undef
+
+
+# Location of the current script
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# TMUX
+PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
+alias tmux="TERM=screen-256color tmux"
+cp $DIR/tmux.conf ~/.tmux.conf
+
 ###- END gilles debianrc
