@@ -2,11 +2,11 @@
 verbose=1
 pause_after_run=1
 shell_patterns=1
-auto_save_setup=1
+auto_save_setup=0
 preallocate_space=0
 auto_menu=0
 use_internal_view=1
-use_internal_edit=0
+use_internal_edit=1
 clear_before_exec=1
 confirm_delete=1
 confirm_overwrite=1
@@ -90,7 +90,7 @@ menubar_visible=0
 free_space=1
 horizontal_split=0
 vertical_equal=1
-left_panel_size=84
+left_panel_size=108
 horizontal_equal=1
 top_panel_size=1
 
@@ -154,6 +154,16 @@ f9=\\e[20~
 f10=\\e[21~
 f11=\\e[23~
 f12=\\e[24~
+f13=\\e[25~
+f14=\\e[26~
+f15=\\e[28~
+f16=\\e[29~
+f17=\\e[31~
+f18=\\e[32~
+f19=\\e[33~
+f20=\\e[34~
+
+[terminal:screen]
 f13=\\e[25~
 f14=\\e[26~
 f15=\\e[28~
