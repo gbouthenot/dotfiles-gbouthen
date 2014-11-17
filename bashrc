@@ -16,7 +16,9 @@ function sz64() {
 }
 
 export LS_OPTIONS='--color=auto'
-export EDITOR=/usr/bin/mcedit
+if [ -f /usr/bin/mcedit ]; then
+  export EDITOR="/usr/bin/mcedit -d"
+fi
 export LANG=en_US.UTF8
 eval "`dircolors`"
 #PS1='${debian_chroot:+($debian_chroot)}\u@\h \t \w\$ '
@@ -44,15 +46,19 @@ stty stop undef
 stty start undef
 
 
+# TMUX
+PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
+if [ -f /lib/terminfo/s/screen-256color ]; then
+  alias tmux="TERM=screen-256color tmux" # problème avec les red hat
+else
+  alias tmux="TERM=xterm-256color tmux" # avec debian, problème de redraw (mcedit)
+fi
+
+
 # Location of the current script
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-# TMUX
-PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
-#alias tmux="TERM=screen-256color tmux" # problème avec les red hat
-alias tmux="TERM=xterm-256color tmux"
-
-# copy all files form "copy"
+# copy all files from "copy"
 #cp -aurv $DIR/copy/{*,.[^.]*,..?*} ~
 cp -aurv $DIR/copy/.[^.]* ~
 
