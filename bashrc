@@ -49,7 +49,8 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # TMUX
 PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
-alias tmux="TERM=screen-256color tmux"
+#alias tmux="TERM=screen-256color tmux" # problème avec les red hat
+alias tmux="TERM=xterm-256color tmux"
 
 # copy all files form "copy"
 #cp -aurv $DIR/copy/{*,.[^.]*,..?*} ~
