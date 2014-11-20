@@ -1,1 +1,1 @@
-. ~/.bashrc
+. ~/dotfiles-gbouthen/bashrc
