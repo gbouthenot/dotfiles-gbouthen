@@ -19,6 +19,10 @@ export LS_OPTIONS='--color=auto'
 if [ -f /usr/bin/mcedit ]; then
   export EDITOR="/usr/bin/mcedit -d"
 fi
+if [ -f /usr/bin/mc ]; then
+  alias mc="/usr/bin/mc -d "
+fi
+
 export LANG=en_US.UTF8
 eval "`dircolors`"
 #PS1='${debian_chroot:+($debian_chroot)}\u@\h \t \w\$ '
@@ -29,6 +33,7 @@ alias dir='ls --color=auto --format=long -al'
 alias ls='ls --color=auto '
 alias hdir='ls --color=auto --format=vertical'
 alias ldapdecode="perl -MMIME::Base64 -n -00 -e 's/\n //g;s/(?<=:: )(\S+)/decode_base64(\$1)/eg;print'"
+
 shopt -s checkwinsize
 umask 002
 
@@ -61,5 +66,24 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # copy all files from "copy"
 #cp -aurv $DIR/copy/{*,.[^.]*,..?*} ~
 cp -aurv $DIR/copy/.[^.]* ~
+
+
+# add a function to freshen the tmux environment
+# http://stackoverflow.com/questions/18241406/tmux-environment-variables-dont-show-up-in-session
+tmup ()
+{
+    echo -n "Updating to latest tmux environment...";
+    export IFS=",";
+    for line in $(tmux showenv -t $(tmux display -p "#S") | tr "\n" ",");
+    do
+        if [[ $line == -* ]]; then
+            unset $(echo $line | cut -c2-);
+        else
+            export $line;
+        fi;
+    done;
+    unset IFS;
+    echo "Done"
+}
 
 ###- END gilles debianrc
