@@ -2,7 +2,7 @@
 ### v1.00
 ### v1.01: add ldapdecode
 ### v1.02: node auto install if /opt/node is present
-### v1.03: tmux19-deb7
+### v1.03: tmux19-deb7 https://packages.debian.org/wheezy-backports/amd64/tmux/download tmux_1.9-6~bpo70+1_amd64
 function gbsrcipaddr() {
   _a=`echo $SSH_CONNECTION|cut -d " " -f 1`
   echo $_a
@@ -17,12 +17,22 @@ function sz64() {
 }
 
 export LS_OPTIONS='--color=auto'
+
 if [ -f /usr/bin/mcedit ]; then
   export EDITOR="/usr/bin/mcedit -d"
 fi
-if [ -f /usr/bin/mc ]; then
-  alias mc="/usr/bin/mc -d "
+if [ "$TERM" = "screen" ]; then
+  # disable mouse for mc / mcedit
+  if [ -f /usr/bin/mcedit ]; then
+    export EDITOR="/usr/bin/mcedit -d"
+    alias mcedit="/usr/bin/mcedit -d"
+  fi
+  if [ -f /usr/bin/mc ]; then
+    alias mc="/usr/bin/mc -d "
+  fi
 fi
+
+
 
 export LANG=en_US.UTF8
 eval "`dircolors`"
@@ -64,15 +74,6 @@ else
   alias tmux="TERM=xterm-256color tmux" # avec debian, problème de redraw (mcedit)
 fi
 
-
-# Location of the current script
-DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-# copy all files from "copy"
-#cp -aurv $DIR/copy/{*,.[^.]*,..?*} ~
-cp -aurv $DIR/../copy/.[^.]* ~
-
-
 # add a function to freshen the tmux environment
 # http://stackoverflow.com/questions/18241406/tmux-environment-variables-dont-show-up-in-session
 tmup ()
@@ -90,5 +91,13 @@ tmup ()
     unset IFS;
     echo "Done"
 }
+
+
+# Location of the current script
+DIR=$( cd $( dirname "${BASH_SOURCE[0]}" ) && pwd )
+
+# copy all files from "copy"
+#cp -aurv $DIR/copy/{*,.[^.]*,..?*} ~
+cp -aurv $DIR/../copy/.[^.]* ~
 
 ###- END gilles debianrc
