@@ -81,10 +81,10 @@ if [ -f /lib/terminfo/s/screen-256color ]; then
   if [ -e ~/dotfiles-gbouthen/bin/tmux-`lsb_release -cs`-`uname -m` ]; then
     alias tmux="TERM=screen-256color ~/dotfiles-gbouthen/bin/tmux-`lsb_release -cs`-`uname -m` -f ~/dotfiles-gbouthen/.tmux.conf"
   else
-    alias tmux="TERM=screen-256color tmux" # problème avec les red hat
+    alias tmux="TERM=screen-256color tmux -f ~/dotfiles-gbouthen/.tmux.conf" # problème avec les red hat
   fi
 else
-  alias tmux="TERM=xterm-256color tmux" # avec debian, problème de redraw (mcedit)
+  alias tmux="TERM=xterm-256color tmux -f ~/dotfiles-gbouthen/.tmux.conf"
 fi
 
 # add a function to freshen the tmux environment
