@@ -38,8 +38,8 @@ alias ldapdecode="perl -MMIME::Base64 -n -00 -e 's/\n //g;s/(?<=:: )(\S+)/decode
 
 # --- Misc
 # disable ^S / ^Q
-stty stop undef
-stty start undef
+stty stop undef 2>/dev/null
+stty start undef 2>/dev/null
 
 shopt -s checkwinsize
 umask 002
