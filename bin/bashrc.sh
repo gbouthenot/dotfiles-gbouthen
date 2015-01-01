@@ -81,11 +81,12 @@ fi
 
 # --- TMUX
 PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
-if [ -f /lib/terminfo/s/screen-256color ]; then
-  if [ -e ~/dotfiles-gbouthen/bin/tmux-`lsb_release -cs`-`uname -m` ]; then
-    alias tmux="TERM=screen-256color ~/dotfiles-gbouthen/bin/tmux-`lsb_release -cs`-`uname -m` -f ~/dotfiles-gbouthen/.tmux.conf"
-  else
-    alias tmux="TERM=screen-256color tmux -f ~/dotfiles-gbouthen/.tmux.conf" # problème avec les red hat
+if [ -e /lib/terminfo/s/screen-256color ]; then
+  alias tmux="TERM=screen-256color tmux -f ~/dotfiles-gbouthen/.tmux.conf" # problème avec les red hat
+  if [ -e /usr/bin/lsb_release ]; then
+    if [ -e ~/dotfiles-gbouthen/bin/tmux-`lsb_release -cs`-`uname -m` ]; then
+      alias tmux="TERM=screen-256color ~/dotfiles-gbouthen/bin/tmux-`lsb_release -cs`-`uname -m` -f ~/dotfiles-gbouthen/.tmux.conf"
+    fi
   fi
 else
   alias tmux="TERM=xterm-256color tmux -f ~/dotfiles-gbouthen/.tmux.conf"
