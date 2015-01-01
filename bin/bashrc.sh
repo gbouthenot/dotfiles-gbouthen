@@ -1,8 +1,12 @@
-###- BEGIN gilles debianrc
 ### v1.00
 ### v1.01: add ldapdecode
 ### v1.02: node auto install if /opt/node is present
 ### v1.03: tmux19-deb7 https://packages.debian.org/wheezy-backports/amd64/tmux/download tmux_1.9-6~bpo70+1_amd64
+
+# Don't execute if not used interactly source: http://superuser.com/questions/789448/choosing-between-bashrc-profile-bash-profile-etc
+# http://superuser.com/questions/789448/choosing-between-bashrc-profile-bash-profile-etc
+[[ $- == *i* ]] || return 0
+
 
 # --- Function definition
 function gbsrcipaddr() {
@@ -24,7 +28,7 @@ function sz64() {
 # --- Environment
 export LS_OPTIONS='--color=auto'
 export LANG=en_US.UTF8
-export PATH=$PATH:~/bin:~/gbouthen-dotfiles/bin
+[[ "$PATH" == */gbouthen-dotfiles/bin* ]] || export PATH=$PATH:~/bin:~/gbouthen-dotfiles/bin
 # ---
 
 
@@ -68,7 +72,7 @@ fi
 
 # --- NodeJS
 if [ -d /opt/node -o -h /opt/node ]; then
-  export PATH=$PATH:/opt/node/bin:$HOME/node_modules/.bin
+  [[ "$PATH" == */opt/node/bin* ]] || export PATH=$PATH:/opt/node/bin:$HOME/node_modules/.bin
   export NODE_PATH=/opt/node:/opt/node/lib/node_modules:$HOME/node_modules
 fi
 # ---
@@ -116,5 +120,3 @@ DIR=$( cd $( dirname "${BASH_SOURCE[0]}" ) && pwd )
 #cp -aurv $DIR/copy/{*,.[^.]*,..?*} ~
 cp -aurv $DIR/../copy/.[^.]* ~
 # ---
-
-###- END gilles debianrc
