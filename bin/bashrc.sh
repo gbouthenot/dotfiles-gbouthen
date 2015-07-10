@@ -3,10 +3,6 @@
 ### v1.02: node auto install if /opt/node is present
 ### v1.03: tmux19-deb7 https://packages.debian.org/wheezy-backports/amd64/tmux/download tmux_1.9-6~bpo70+1_amd64
 
-# Don't execute if not used interactly source: http://superuser.com/questions/789448/choosing-between-bashrc-profile-bash-profile-etc
-# http://superuser.com/questions/789448/choosing-between-bashrc-profile-bash-profile-etc
-[[ $- == *i* ]] || return 0
-
 
 # --- Function definition
 function gbsrcipaddr() {
@@ -37,19 +33,6 @@ alias dir='ls --color=auto --format=long -al'
 alias ls='ls --color=auto '
 alias hdir='ls --color=auto --format=vertical'
 alias ldapdecode="perl -MMIME::Base64 -n -00 -e 's/\n //g;s/(?<=:: )(\S+)/decode_base64(\$1)/eg;print'"
-# ---
-
-
-# --- Misc
-# disable ^S / ^Q
-stty stop undef 2>/dev/null
-stty start undef 2>/dev/null
-
-shopt -s checkwinsize
-umask 002
-
-eval "`dircolors`"
-PS1='\[\e]0;\u@\h\a\]\[\e[36m\]\t \[\e[32m\]\u(`gbsrcipaddr`)\[\e[0m\]@\[\e[33m\]\h(`gbdstipaddr`)\[\e[0m\]\n\[\e[33m\]\w\[\e[0m\]\$ '
 # ---
 
 
@@ -113,6 +96,12 @@ fi
 # ---
 
 
+
+# Don't execute if not used interactly source: http://superuser.com/questions/789448/choosing-between-bashrc-profile-bash-profile-etc
+# http://superuser.com/questions/789448/choosing-between-bashrc-profile-bash-profile-etc
+[[ $- == *i* ]] || return 0
+
+
 # --- Copy files
 # Location of the current script
 DIR=$( cd $( dirname "${BASH_SOURCE[0]}" ) && pwd )
@@ -120,4 +109,17 @@ DIR=$( cd $( dirname "${BASH_SOURCE[0]}" ) && pwd )
 # copy all files from "copy"
 #cp -aurv $DIR/copy/{*,.[^.]*,..?*} ~
 cp -aurv $DIR/../copy/.[^.]* ~
+# ---
+
+
+# --- Misc
+# disable ^S / ^Q
+stty stop undef 2>/dev/null
+stty start undef 2>/dev/null
+
+shopt -s checkwinsize
+umask 002
+
+eval "`dircolors`"
+PS1='\[\e]0;\u@\h\a\]\[\e[36m\]\t \[\e[32m\]\u(`gbsrcipaddr`)\[\e[0m\]@\[\e[33m\]\h(`gbdstipaddr`)\[\e[0m\]\n\[\e[33m\]\w\[\e[0m\]\$ '
 # ---
