@@ -20,11 +20,13 @@ function sz64() {
 #function subl() { /opt/Subl2/sublime_text "$@" & }
 # ---
 
+# Location of the dotfiles dir
+DOTDIR=$( cd $( dirname "${BASH_SOURCE[0]}" ) && cd .. && pwd )
 
 # --- Environment
 export LS_OPTIONS='--color=auto'
 export LANG=en_US.UTF8
-[[ "$PATH" == */gbouthen-dotfiles/bin* ]] || export PATH=$PATH:~/bin:~/gbouthen-dotfiles/bin
+[[ "$PATH" == */${DOTDIR}/bin* ]] || export PATH=$PATH:~/bin:${DOTDIR}/bin
 # ---
 
 
@@ -65,14 +67,15 @@ fi
 # --- TMUX
 PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
 if [ -e /lib/terminfo/s/screen-256color ]; then
-  alias tmux="TERM=screen-256color tmux -f ~/dotfiles-gbouthen/.tmux.conf" # problème avec les red hat
+  alias tmux="TERM=screen-256color tmux -f ${DOTDIR}/.tmux.conf" # problème avec les red hat
   if [ -e /usr/bin/lsb_release ]; then
-    if [ -e ~/dotfiles-gbouthen/bin/tmux-`lsb_release -cs`-`uname -m` ]; then
-      alias tmux="TERM=screen-256color ~/dotfiles-gbouthen/bin/tmux-`lsb_release -cs`-`uname -m` -f ~/dotfiles-gbouthen/.tmux.conf"
+    if [ -e ${DOTDIR}/bin/tmux-`lsb_release -cs`-`uname -m` ]; then
+      echo "DEBUG gbouthen"
+      alias tmux="TERM=screen-256color ${DOTDIR}/bin/tmux-`lsb_release -cs`-`uname -m` -f ${DOTDIR}/.tmux.conf"
     fi
   fi
 else
-  alias tmux="TERM=xterm-256color tmux -f ~/dotfiles-gbouthen/.tmux.conf"
+  alias tmux="TERM=xterm-256color tmux -f ${DOTDIR}/.tmux.conf"
 fi
 
 # add a function to freshen the tmux environment
@@ -95,20 +98,15 @@ if [ -n "$TMUX" ]; then
 fi
 # ---
 
-
-
-# Don't execute if not used interactly source: http://superuser.com/questions/789448/choosing-between-bashrc-profile-bash-profile-etc
+# Don't execute further if not used interactly source: http://superuser.com/questions/789448/choosing-between-bashrc-profile-bash-profile-etc
 # http://superuser.com/questions/789448/choosing-between-bashrc-profile-bash-profile-etc
 [[ $- == *i* ]] || return 0
 
 
 # --- Copy files
-# Location of the current script
-DIR=$( cd $( dirname "${BASH_SOURCE[0]}" ) && pwd )
-
 # copy all files from "copy"
-#cp -aurv $DIR/copy/{*,.[^.]*,..?*} ~
-cp -aurv $DIR/../copy/.[^.]* ~
+#cp -aurv $DOTDIR/copy/{*,.[^.]*,..?*} ~
+cp -aurv $DOTDIR/copy/.[^.]* ~
 # ---
 
 
@@ -123,3 +121,5 @@ umask 002
 eval "`dircolors`"
 PS1='\[\e]0;\u@\h\a\]\[\e[36m\]\t \[\e[32m\]\u(`gbsrcipaddr`)\[\e[0m\]@\[\e[33m\]\h(`gbdstipaddr`)\[\e[0m\]\n\[\e[33m\]\w\[\e[0m\]\$ '
 # ---
+
+unset DOTDIR
