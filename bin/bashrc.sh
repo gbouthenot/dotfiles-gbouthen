@@ -70,7 +70,6 @@ if [ -e /lib/terminfo/s/screen-256color ]; then
   alias tmux="TERM=screen-256color tmux -f ${DOTDIR}/.tmux.conf" # problème avec les red hat
   if [ -e /usr/bin/lsb_release ]; then
     if [ -e ${DOTDIR}/bin/tmux-`lsb_release -cs`-`uname -m` ]; then
-      echo "DEBUG gbouthen"
       alias tmux="TERM=screen-256color ${DOTDIR}/bin/tmux-`lsb_release -cs`-`uname -m` -f ${DOTDIR}/.tmux.conf"
     fi
   fi
