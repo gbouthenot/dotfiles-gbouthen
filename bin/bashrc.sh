@@ -114,6 +114,9 @@ cp -aurv $DOTDIR/copy/.[^.]* ~
 stty stop undef 2>/dev/null
 stty start undef 2>/dev/null
 
+# Allow the use of exclamation mark
+set +o histexpand
+
 shopt -s checkwinsize
 umask 002
 
