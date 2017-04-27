@@ -26,6 +26,7 @@ DOTDIR=$( cd $( dirname "${BASH_SOURCE[0]}" ) && cd .. && pwd )
 # --- Environment
 export LS_OPTIONS='--color=auto'
 export LANG=en_US.UTF8
+unset LC_ALL
 [[ "$PATH" == */${DOTDIR}/bin* ]] || export PATH=$PATH:~/bin:${DOTDIR}/bin
 # ---
 
