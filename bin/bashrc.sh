@@ -14,8 +14,13 @@ function gbdstipaddr() {
   echo $_a
 }
 function sz64() {
-  _a=`bzip2 -c $1 | base64 -w0`
-  echo echo \"$_a\" \| base64 -d \| bunzip2 \> $1
+  if [[ $1 == *.bz2 ]] ; then
+    a=`base64 -w0 -- $1`
+    echo " "echo \"$a\" \| base64 -d \> $1
+  else
+    a=`bzip2 --best -c -- $1 | base64 -w0`
+    echo " "echo \"$a\" \| base64 -d \| bunzip2 \> $1
+  fi
 }
 #function subl() { /opt/Subl2/sublime_text "$@" & }
 # ---
