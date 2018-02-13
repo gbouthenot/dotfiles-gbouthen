@@ -1,0 +1,4 @@
+[[ "${BASH_SOURCE[0]}" == "${0}" ]] && echo "usage: source ${BASH_SOURCE[0]}" && exit 1
+
+source $DOTDIR/bin/.prompt-common
+PS1="\[\e]0;\u@\h\a\]\[\e[36m\]\t \[\e[32m\]\u(`gbsrcipaddr`)\[\e[0m\]@\[\e[33m\]\h(`gbdstipaddr`)\[\e[0m\]\n\[\e[33m\]\w\[\e[0m\]\$ "

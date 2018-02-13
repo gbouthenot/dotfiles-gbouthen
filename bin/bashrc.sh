@@ -4,27 +4,6 @@
 ### v1.03: tmux19-deb7 https://packages.debian.org/wheezy-backports/amd64/tmux/download tmux_1.9-6~bpo70+1_amd64
 
 
-# --- Function definition
-function gbsrcipaddr() {
-  _a=`echo $SSH_CONNECTION|cut -d " " -f 1`
-  echo $_a
-}
-function gbdstipaddr() {
-  _a=`echo $SSH_CONNECTION|cut -d " " -f 3`
-  echo $_a
-}
-function sz64() {
-  if [[ $1 == *.bz2 ]] ; then
-    a=`base64 -w0 -- $1`
-    echo " "echo \"$a\" \| base64 -d \> $1
-  else
-    a=`bzip2 --best -c -- $1 | base64 -w0`
-    echo " "echo \"$a\" \| base64 -d \| bunzip2 \> $1
-  fi
-}
-#function subl() { /opt/Subl2/sublime_text "$@" & }
-# ---
-
 # Location of the dotfiles dir
 DOTDIR=$( cd $( dirname "${BASH_SOURCE[0]}" ) && cd .. && pwd )
 
@@ -40,6 +19,7 @@ unset SSH_ASKPASS
 # --- Aliases
 alias dir='ls --color=auto --format=long -al'
 alias ls='ls --color=auto '
+alias ll='ls -al --color=auto '
 alias hdir='ls --color=auto --format=vertical'
 alias ldapdecode="perl -MMIME::Base64 -n -00 -e 's/\n //g;s/(?<=:: )(\S+)/decode_base64(\$1)/eg;print'"
 # ---
@@ -127,8 +107,7 @@ set +o histexpand
 shopt -s checkwinsize
 umask 002
 
-eval "`dircolors`"
-PS1='\[\e]0;\u@\h\a\]\[\e[36m\]\t \[\e[32m\]\u(`gbsrcipaddr`)\[\e[0m\]@\[\e[33m\]\h(`gbdstipaddr`)\[\e[0m\]\n\[\e[33m\]\w\[\e[0m\]\$ '
+source $DOTDIR/bin/prompt-default
 # ---
 
-unset DOTDIR
+# unset DOTDIR
