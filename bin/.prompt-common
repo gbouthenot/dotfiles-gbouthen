@@ -16,6 +16,6 @@ function sz64() {
     echo " "echo \"$a\" \| base64 -d \| bunzip2 \> $1
   fi
 }
-function sha384int() {
+function gbsha384() {
   while [ $1 ]; do echo -n $1: integrity=\"sha384- ; openssl dgst -sha384 -binary $1 | openssl base64 -A ; echo \" ; shift ; done
 }
