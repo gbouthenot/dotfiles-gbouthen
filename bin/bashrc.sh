@@ -107,7 +107,10 @@ set +o histexpand
 shopt -s checkwinsize
 umask 002
 
-source $DOTDIR/bin/prompt-default
+eval "`dircolors`"
+
+source $DOTDIR/bin/.gb-functions.sh
+gbprompt
 # ---
 
 # unset DOTDIR
