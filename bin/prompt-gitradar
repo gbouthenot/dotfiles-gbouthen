@@ -1,3 +1,5 @@
 [[ "${BASH_SOURCE[0]}" == "${0}" ]] && echo "usage: source ${BASH_SOURCE[0]}" && exit 1
 
-PS1="\[\e]0;\u@\h\a\]\[\e[36m\]\t \[\e[32m\]\u(`gbsrcipaddr`)\[\e[0m\]@\[\e[33m\]\h(`gbdstipaddr`)\[\e[0m\]\$($DOTDIR/../.git-radar/git-radar --bash --fetch)\n\[\e[33m\]\w\[\e[0m\]\$ "
+# source: https://github.com/michaeldfallen/git-radar
+# Latest commit 2ac25e3 on 5 Dec 2016
+PS1="\[\e]0;\u@\h\a\]\[\e[36m\]\t \[\e[32m\]\u(`gbsrcipaddr`)\[\e[0m\]@\[\e[33m\]\h(`gbdstipaddr`)\[\e[0m\]\$($DOTDIR/git-radar/git-radar --bash --fetch)\n\[\e[33m\]\w\[\e[0m\]\$ "
