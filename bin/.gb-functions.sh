@@ -28,3 +28,18 @@ function gbprompt-gitradar () {
   # Latest commit 2ac25e3 on 5 Dec 2016
   PS1="\[\e]0;\u@\h\a\]\[\e[36m\]\t \[\e[32m\]\u(`gbsrcipaddr`)\[\e[0m\]@\[\e[33m\]\h(`gbdstipaddr`)\[\e[0m\]\$($DOTDIR/git-radar/git-radar --bash --fetch)\n\[\e[33m\]\w\[\e[0m\]\$ "
 }
+
+###
+# gbagent: start ssh-agent and add private key
+# usage: gbagent [private_key_file]
+# by default take ~/.ssh/id_rsa
+# return if the file does not exist
+# if a previous ssh-agent is not found, fork a new one
+# add the key to the agent
+###
+function gbagent() {
+  KEY=~/.ssh/id_rsa && [[ -n $1 ]] && KEY=$1
+  [[ ! -e $KEY ]] && echo $KEY not found && return
+  [[ -z $SSH_AGENT_PID ]] && eval `ssh-agent`
+  ssh-add $KEY
+}
