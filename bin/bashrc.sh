@@ -8,8 +8,9 @@
 DOTDIR=$( cd $( dirname "${BASH_SOURCE[0]}" ) && cd .. && pwd )
 
 # --- Environment
-export LS_OPTIONS='--color=auto'
+export HISTCONTROL=ignoreboth
 export LANG=en_US.UTF8
+export LS_OPTIONS='--color=auto'
 unset LC_ALL
 unset SSH_ASKPASS
 [[ "$PATH" == */${DOTDIR}/bin* ]] || export PATH=$PATH:~/bin:${DOTDIR}/bin
