@@ -43,3 +43,15 @@ function gbagent() {
   [[ -z $SSH_AGENT_PID ]] && eval `ssh-agent`
   ssh-add $KEY
 }
+
+###
+# tprt: test tcp and udp port.
+# does only work with BASH !
+# Samples:
+# tprt udp 0.pool.ntp.org 123
+# tprt tcp ldap.example.org 389 .5 (.5 second timeout)
+###
+function tprt() {
+  [ "$1" != tcp -a "$1" != udp -o -z "$2" -o -z "$3" ] && >&2 echo "Usage: tprt tcp|udp host port [timeout=1]" && return 9
+  timeout ${4:-1} bash -c '</dev/$1/$2/$3 && echo open || (echo closed)' arg0 $* 2>/dev/null || echo timeout
+}
