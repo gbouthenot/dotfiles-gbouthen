@@ -23,6 +23,7 @@ alias ls='ls --color=auto '
 alias ll='ls -al --color=auto '
 alias hdir='ls --color=auto --format=vertical'
 alias ldapdecode="perl -MMIME::Base64 -n -00 -e 's/\n //g;s/(?<=:: )(\S+)/decode_base64(\$1)/eg;print'"
+unalias cp mv rm 2>/dev/null
 # ---
 
 
