@@ -45,6 +45,13 @@ function gbagent() {
 }
 
 ###
+# gbdf
+###
+function gbdf() {
+  df -hT $* | grep -Ev -e "^(cgmfs|overlay|shm|(dev)?tmpfs|udev)" -e "/devicemapper/mnt/"
+}
+
+###
 # tprt: test tcp and udp port.
 # does only work with BASH !
 # Samples:
