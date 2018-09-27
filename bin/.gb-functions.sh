@@ -19,7 +19,7 @@ function gbsha384() {
   while [ $1 ]; do echo -n $1: integrity=\"sha384- ; openssl dgst -sha384 -binary $1 | openssl base64 -A ; echo \" ; shift ; done
 }
 
-function gbprompt() {
+function gbprompt-std() {
   PS1="\[\e]0;\u@\h\a\]\[\e[36m\]\t \[\e[32m\]\u(`gbsrcipaddr`)\[\e[0m\]@\[\e[33m\]\h(`gbdstipaddr`)\[\e[0m\]\n\[\e[33m\]\w\[\e[0m\]\$ "
 }
 

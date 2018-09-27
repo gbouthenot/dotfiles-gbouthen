@@ -112,7 +112,7 @@ umask 002
 eval "`dircolors`"
 
 source $DOTDIR/bin/.gb-functions.sh
-gbprompt
+gbprompt-std
 # ---
 
 # unset DOTDIR
