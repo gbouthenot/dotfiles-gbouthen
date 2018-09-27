@@ -93,8 +93,20 @@ fi
 
 # --- Copy files
 # copy all files from "copy"
+# change -u (update by newer) to -n (no overwrite) ?
 #cp -aurv $DOTDIR/copy/{*,.[^.]*,..?*} ~
 cp -aurv $DOTDIR/copy/.[^.]* ~
+# ---
+
+# --- Git
+#
+if which git >/dev/null 2>&1 ; then
+  git config --global push.default simple "!^$"
+  git config --global gc.autodetach false "!^$"
+  git config --global color.ui auto "!^$"
+  git config --global alias.br branch "!^$"
+  git config --global alias.st status "!^$"
+fi
 # ---
 
 
