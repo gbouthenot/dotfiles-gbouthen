@@ -8,11 +8,11 @@ function gbdstipaddr() {
 }
 function sz64() {
   if [[ $1 == *.bz2 ]] ; then
-    a=`base64 -w0 -- $1`
-    echo " "echo \"$a\" \| base64 -d \> $1
+    a=`base64 -w0 -- "$1"`
+    echo " "echo \"$a\" \| base64 -d \> "$1"
   else
-    a=`bzip2 --best -c -- $1 | base64 -w0`
-    echo " "echo \"$a\" \| base64 -d \| bunzip2 \> $1
+    a=`bzip2 --best -c -- "$1" | base64 -w0`
+    echo " "echo \"$a\" \| base64 -d \| bunzip2 \> \"$1\"
   fi
 }
 function gbsha384() {
