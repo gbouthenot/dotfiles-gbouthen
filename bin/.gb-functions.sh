@@ -62,3 +62,10 @@ function tprt() {
   [ "$1" != tcp -a "$1" != udp -o -z "$2" -o -z "$3" ] && >&2 echo "Usage: tprt tcp|udp host port [timeout=1]" && return 9
   timeout ${4:-1} bash -c '</dev/$1/$2/$3 && echo open || (echo closed)' arg0 $* 2>/dev/null || echo timeout
 }
+
+function gbgitauthor-ac {
+  #[[ "${BASH_SOURCE[0]}" == "${0}" ]] && echo "usage: source ${BASH_SOURCE[0]}" && exit 1
+  dom="ac-besancon"
+  export GIT_AUTHOR_NAME="Gilles Bouthenot"
+  export GIT_AUTHOR_EMAIL="gilles.bouthenot@$dom.fr"
+}
