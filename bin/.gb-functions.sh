@@ -52,15 +52,17 @@ function gbdf() {
 }
 
 ###
-# tprt: test tcp and udp port.
+# tport: test tcp and udp port.
 # does only work with BASH !
-# Samples:
-# tprt udp 0.pool.ntp.org 123
-# tprt tcp ldap.example.org 389 .5 (.5 second timeout)
+# Examples:
+# udp: tport 0.pool.ntp.org 123 udp
+# tcp with 0.5s timeout: tport ldap.example.org 389 .5
 ###
-function tprt() {
-  [ "$1" != tcp -a "$1" != udp -o -z "$2" -o -z "$3" ] && >&2 echo "Usage: tprt tcp|udp host port [timeout=1]" && return 9
-  timeout ${4:-1} bash -c '</dev/$1/$2/$3 && echo open || (echo closed)' arg0 $* 2>/dev/null || echo timeout
+function tport() {
+  [ -z "$1" -o -z "$2" ] && >&2 echo "Usage: tport host port [tcp|udp] [timeout=1]" && return 1
+  p=tcp ; [ "$3" == udp -o "$3" == tcp ] && p=$3 && shift
+  t=1 ; re='^[0-9]*(\.[0-9]+)?$' ; [[ -n "$3" && "$3" =~ $re ]] && t=$3
+  timeout $t bash -c '</dev/$p/$1/$2 && echo open || (echo closed)' arg0 $* 2>/dev/null || echo timeout
 }
 
 function gbgitauthor-ac {
