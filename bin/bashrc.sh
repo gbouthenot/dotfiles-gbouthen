@@ -98,6 +98,18 @@ fi
 cp -aurv $DOTDIR/copy/.[^.]* ~
 # ---
 
+
+# --- ~/.bash_profile
+# Create file if it does not exist, append nonpresent lines
+#
+INFILE=$DOTDIR/bash_profile
+OUTFILE=~/.bash_profile
+[ ! -e "$OUTFILE" ] && >"$OUTFILE"
+while IFS='' read -r line || [[ -n "$line" ]]; do
+  grep -Fq "$line" "$OUTFILE" || ( echo "Appending line to $OUTFILE: $line" ; echo "$line" >>"$OUTFILE" )
+done < "$INFILE"
+
+
 # --- Git
 #
 if which git >/dev/null 2>&1 ; then
