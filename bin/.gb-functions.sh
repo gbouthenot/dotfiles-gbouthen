@@ -61,7 +61,7 @@ function gbdf() {
 function tport() {
   [ -z "$1" -o -z "$2" ] && >&2 echo "Usage: tport host port [tcp|udp] [timeout=1]" && return 9
   i="$1" ; po="$2"
-  re='^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$' ; [[ ! "$i" =~ $re ]] && >&2 echo "$i is not an ipv4 address" && return 9
+  # re='^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$' ; [[ ! "$i" =~ $re ]] && >&2 echo "$i is not an ipv4 address" && return 9
   re='^[0-9]+$' ; [[ ! "$po" =~ $re ]] && >&2 echo "$po is not a port number" && return 9
   pr=tcp ; [ "$3" == udp -o "$3" == tcp ] && pr="$3" && shift
   t=1 ; re='^[0-9]*(\.[0-9]+)?$' ; [[ -n "$3" && "$3" =~ $re ]] && t="$3"
