@@ -93,9 +93,9 @@ fi
 #cp -aurv $DOTDIR/copy/{*,.[^.]*,..?*} ~
 cp -aurv $DOTDIR/copy/.[^.]* ~
 
-# set MC skin in ~/.config/mc/ini
-MC_SKIN=~/.local/share/mc/default_bold.ini
-sed -i 's/^skin=.*/skin=\/root\/.local\/share\/mc\/default_bold.ini/' ~/.config/mc/ini >/dev/null
+# set MC skin in ~/.config/mc/ini (should not contain pipe character)
+MSKIN=~/.local/share/mc/default_bold.ini
+sed -i "s|^skin=.*|skin=$MSKIN|" ~/.config/mc/ini >/dev/null
 
 # set tmux internal terminal
 interm="screen"
