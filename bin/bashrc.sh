@@ -99,8 +99,8 @@ sed -i "s|^skin=.*|skin=$MSKIN|" ~/.config/mc/ini >/dev/null
 
 # set tmux internal terminal
 interm="screen"
-[ -e /usr/lib/terminfo/t/screen-256color ] && interm="screen-256color"
-[ -e /usr/lib/terminfo/t/tmux-256color ] && interm="tmux-256color"
+[ -e /usr/lib/terminfo/s/screen-256color -o -e /lib/terminfo/s/screen-256color ] && interm="screen-256color"
+[ -e /usr/lib/terminfo/t/tmux-256color -o -e /lib/terminfo/t/tmux-256color ] && interm="tmux-256color"
 sed -i "s/^set -g default-terminal .*/set -g default-terminal "$interm"/" ~/.tmux.conf
 
 
