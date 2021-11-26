@@ -15,3 +15,27 @@ while [ $color -lt 256 ]; do
     color=$[$color+1]
     if [ $[($color-16)%6] -eq 0 ]; then echo; fi
 done
+
+#
+# Show capabilities
+#
+echo -e this is NORMAL '\e[1m'BOLD'\e[0m' '\e[2m'DIM'\e[0m' '\e[3m'ITALIC'\e[0m' '\e[4m'UNDERLINED'\e[0m' '\e[5m'BLINK'\e[0m' '\e[7m'REVERSE'\e[0m' '\e[1;3;4;5;7m'BIUBR'\e[0m'
+echo -e '\e[38;5;208m'col 208 NORMAL'\e[0m' '\e[1;38;5;208m'BOLD'\e[0m' '\e[2;38;5;208m'DIM'\e[0m' '\e[3;38;5;208m'ITALIC'\e[0m' '\e[4;38;5;208m'UNDERLINED'\e[0m' '\e[5;38;5;208m'BLINK'\e[0m' '\e[7;38;5;208m'REVERSE'\e[0m' '\e[1;3;4;5;7;38;5;208m'BIUBR'\e[0m'
+
+#
+# Truecolor test
+# Based on: https://gist.github.com/XVilka/8346728
+#
+awk -v term_cols="${width:-$(tput cols || echo 80)}" 'BEGIN{
+    s="/\\";
+    for (colnum = 0; colnum<term_cols; colnum++) {
+        r = 255-(colnum*255/term_cols);
+        g = (colnum*510/term_cols);
+        b = (colnum*255/term_cols);
+        if (g>255) g = 510-g;
+        printf "\033[48;2;%d;%d;%dm", r,g,b;
+        printf "\033[38;2;%d;%d;%dm", 255-r,255-g,255-b;
+        printf "%s\033[0m", substr(s,colnum%2+1,1);
+    }
+    printf "\n";
+}'
