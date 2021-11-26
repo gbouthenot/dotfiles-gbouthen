@@ -58,8 +58,10 @@ fi
 PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
 
 # if a binary is provided, use it
-if [ -e ${DOTDIR}/bin/tmux-`lsb_release -cs`-`uname -m` ]; then
-  alias tmux="${DOTDIR}/bin/tmux-`lsb_release -cs`-`uname -m`"
+if [ -e /usr/bin/lsb_release ]; then
+  if [ -e ${DOTDIR}/bin/tmux-`lsb_release -cs`-`uname -m` ]; then
+    alias tmux="${DOTDIR}/bin/tmux-`lsb_release -cs`-`uname -m`"
+  fi
 fi
 
 # add a function to freshen the tmux environment
