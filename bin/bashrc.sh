@@ -96,6 +96,10 @@ fi
 # change -u (update by newer) to -n (no overwrite) ?
 #cp -aurv $DOTDIR/copy/{*,.[^.]*,..?*} ~
 cp -aurv $DOTDIR/copy/.[^.]* ~
+
+# set MC skin in ~/.config/mc/ini
+MC_SKIN=~/.local/share/mc/default_bold.ini
+sed -i 's/^skin=.*/skin=\/root\/.local\/share\/mc\/default_bold.ini/' ~/.config/mc/ini >/dev/null
 # ---
 
 
