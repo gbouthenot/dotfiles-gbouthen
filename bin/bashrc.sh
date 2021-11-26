@@ -56,14 +56,14 @@ fi
 # --- TMUX
 PS1="$PS1"'$([ -n "$TMUX" ] && tmux setenv TMUXPWD_$(tmux display -p "#D" | tr -d %) "$PWD")'
 if [ -e /lib/terminfo/s/screen-256color ]; then
-  alias tmux="TERM=screen-256color tmux -f ${DOTDIR}/.tmux.conf" # problème avec les red hat
+  alias tmux="TERM=screen-256color tmux -f ~/.tmux.conf" # problème avec les red hat
   if [ -e /usr/bin/lsb_release ]; then
     if [ -e ${DOTDIR}/bin/tmux-`lsb_release -cs`-`uname -m` ]; then
-      alias tmux="TERM=screen-256color ${DOTDIR}/bin/tmux-`lsb_release -cs`-`uname -m` -f ${DOTDIR}/.tmux.conf"
+      alias tmux="TERM=screen-256color ${DOTDIR}/bin/tmux-`lsb_release -cs`-`uname -m` -f ~/.tmux.conf"
     fi
   fi
 else
-  alias tmux="TERM=xterm-256color tmux -f ${DOTDIR}/.tmux.conf"
+  alias tmux="TERM=xterm-256color tmux -f ~/.tmux.conf"
 fi
 
 # add a function to freshen the tmux environment
