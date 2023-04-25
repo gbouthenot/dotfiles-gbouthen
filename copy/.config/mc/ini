@@ -77,7 +77,7 @@ editor_backup_extension=~
 mcview_eof=
 ignore_ftp_chattr_errors=true
 keymap=mc.keymap
-skin=/home/gilles/.local/share/mc/default_bold.ini
+skin=default
 filepos_max_saved_entries=1024
 
 safe_overwrite=false
