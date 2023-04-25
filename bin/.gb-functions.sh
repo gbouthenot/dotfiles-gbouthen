@@ -69,8 +69,20 @@ function tport() {
 }
 
 function gbgitauthor-ac {
-  #[[ "${BASH_SOURCE[0]}" == "${0}" ]] && echo "usage: source ${BASH_SOURCE[0]}" && exit 1
-  dom="ac-besancon"
+  local dom="ac-besancon"
   export GIT_AUTHOR_NAME="Gilles Bouthenot"
   export GIT_AUTHOR_EMAIL="gilles.bouthenot@$dom.fr"
+}
+
+function gbyank {
+  # get data either form stdin or from file
+  local buf=$(cat "$@")
+
+  # build up OSC 52 ANSI escape sequence
+  local esc="\033]52;c;$( printf %s "$buf" | base64 | tr -d '\r\n' )\a"
+  printf $esc
+}
+
+function gbmping {
+  (for f in $@ ; do ping $f & done; wait)
 }
