@@ -77,8 +77,16 @@ editor_backup_extension=~
 mcview_eof=
 ignore_ftp_chattr_errors=true
 keymap=mc.keymap
-skin=default
+skin=/home/gilles/.local/share/mc/default_bold.ini
 filepos_max_saved_entries=1024
+
+safe_overwrite=false
+editor_drop_selection_on_copy=true
+editor_cursor_after_inserted_block=false
+editor_state_full_filename=true
+editor_ask_filename_before_edit=false
+editor_filesize_threshold=64M
+editor_stop_format_chars=-+*\\,.;:&>
 
 [Layout]
 message_visible=1
@@ -105,6 +113,8 @@ autodetect_codeset=
 clipboard_store=
 clipboard_paste=
 
+spell_language=en
+
 [Colors]
 base_color=
 screen=
@@ -119,6 +129,8 @@ xterm-256color=
 xterm-256colors=
 
 screen-256color=
+
+tmux-256color=
 
 [Panels]
 show_mini_info=true
@@ -140,6 +152,9 @@ torben_fj_mode=false
 quick_search_mode=2
 
 simple_swap=false
+
+panel_scroll_center=false
+select_flags=6
 
 [terminal:linux]
 f1=\\eOP
@@ -178,3 +193,15 @@ Find *.orig after patching=find . -name \\*.orig -print
 Find SUID and SGID programs=find . \\( \\( -perm -04000 -a -perm +011 \\) -o \\( -perm -02000 -a -perm +01 \\) \\) -print
 Find rejects after patching=find . -name \\*.rej -print
 Modified git files=git ls-files --modified
+
+[terminal:tmux-256color]
+f13=\\e[25~
+f14=\\e[26~
+f15=\\e[28~
+f16=\\e[29~
+f17=\\e[31~
+f18=\\e[32~
+f19=\\e[33~
+f20=\\e[34~
+backtab=
+backspace=
