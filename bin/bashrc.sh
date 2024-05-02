@@ -1,9 +1,3 @@
-### v1.00
-### v1.01: add ldapdecode
-### v1.02: node auto install if /opt/node is present
-### v1.03: tmux19-deb7 https://packages.debian.org/wheezy-backports/amd64/tmux/download tmux_1.9-6~bpo70+1_amd64
-
-
 # Location of the dotfiles dir
 DOTDIR=$( cd $( dirname "${BASH_SOURCE[0]}" ) && cd .. && pwd )
 
@@ -23,7 +17,6 @@ alias dir='ls --color=auto --format=long -al'
 alias ls='ls --color=auto '
 alias ll='ls -al --color=auto '
 alias hdir='ls --color=auto --format=vertical'
-alias ldapdecode="perl -MMIME::Base64 -n -00 -e 's/\n //g;s/(?<=:: )(\S+)/decode_base64(\$1)/eg;print'"
 unalias cp mv rm 2>/dev/null
 # ---
 

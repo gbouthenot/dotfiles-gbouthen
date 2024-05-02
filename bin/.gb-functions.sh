@@ -83,6 +83,11 @@ function gbyank {
   printf $esc
 }
 
+function docohc { for cid in $(docker-compose ps -q) ; do docker inspect $cid | jq ".[] | { Name, Health: .State.Health }" ; done }
+function docops { if [ -x /usr/libexec/docker/cli-plugins/docker-compose ]; then docker compose ps --format 'table {{.Name}}\t{{.Status}}\t{{.Ports}}'; else docker-compose ps; fi }
+function ldapdecode { perl -MMIME::Base64 -n -00 -e 's/\n //g;s/(?<=:: )(\S+)/decode_base64($1)/eg;print'; }
+function me() { [ -x /usr/bin/mcedit ] && /usr/bin/mcedit "$@" ; }
+
 function gbmping {
   (for f in $@ ; do ping $f & done; wait)
 }
