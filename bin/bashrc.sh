@@ -163,6 +163,9 @@ gbprompt-std
 
 # Set up fzf key bindings and fuzzy completion
 eval "$($DOTDIR/bin/fzf --bash)"
+
+# Set up bat tab completion
+source "$DOTDIR/bin/bat.bash"
 # ---
 
 # unset DOTDIR
