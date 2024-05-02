@@ -147,6 +147,9 @@ eval "`dircolors`"
 
 source $DOTDIR/bin/.gb-functions.sh
 gbprompt-std
+
+# Set up fzf key bindings and fuzzy completion
+eval "$($DOTDIR/bin/fzf --bash)"
 # ---
 
 # unset DOTDIR
