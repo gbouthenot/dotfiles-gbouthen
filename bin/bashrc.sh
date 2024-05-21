@@ -157,6 +157,17 @@ gbprompt-std
 # Set up fzf key bindings and fuzzy completion
 eval "$($DOTDIR/bin/fzf --bash)"
 
+_fzf_setup_completion path git bat me joe nano
+_fzf_setup_completion dir tree
+export FZF_DEFAULT_COMMAND="fd --type file --color=always --follow --hidden --exclude .git"
+export FZF_DEFAULT_OPTS="--ansi"
+_fzf_compgen_path() {
+  fd --hidden --follow --exclude ".git" . "$1"
+}
+_fzf_compgen_dir() {
+  fd --type d --hidden --follow --exclude ".git" . "$1"
+}
+
 # Set up tab completion
 source "$DOTDIR/bin/bat.bash"
 source "$DOTDIR/bin/fd.bash"
