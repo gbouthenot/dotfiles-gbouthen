@@ -149,10 +149,14 @@ set +o histexpand
 shopt -s checkwinsize
 umask 002
 
-eval "`dircolors`"
+# eval "`dircolors`"
 
 source $DOTDIR/bin/.gb-functions.sh
 gbprompt-std
+
+# I had to source bash_commpletion befor fzf completion
+# https://stackoverflow.com/questions/35921748/detect-the-presence-of-bash-completion-in-bash
+[ -e /etc/bash_completion ] && source /etc/bash_completion
 
 # Set up fzf key bindings and fuzzy completion
 eval "$($DOTDIR/bin/fzf --bash)"
