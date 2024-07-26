@@ -122,6 +122,7 @@ if which git >/dev/null 2>&1 ; then
   git config --global push.default           "upstream"
   git config --global gc.autodetach          "false"
   git config --global color.ui               "auto"
+  git config --global pull.ff                "only"
 
   git config --global alias.b            "branch -vv"
   git config --global alias.rb           "branch -rvv"
