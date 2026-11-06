@@ -14,18 +14,36 @@ __bat_escape_completions()
 {
 	# Do not escape if completing a quoted value.
 	[[ $cur == [\"\']* ]] && return 0
-	# printf -v to an array index is available in bash >= 4.1.
-	# Use it if available, as -o filenames is semantically incorrect if
-	# we are not actually completing filenames, and it has side effects
-	# (e.g. adds trailing slash to candidates matching present dirs).
 	if ((
+		BASH_VERSINFO[0] > 5 || \
+		BASH_VERSINFO[0] == 5 && BASH_VERSINFO[1] >= 3
+	)); then
+		# bash >= 5.3 has "compopt -o fullquote", which exactly does
+		# what this function tries to do.
+		compopt -o fullquote
+	elif ((
 		BASH_VERSINFO[0] > 4 || \
 		BASH_VERSINFO[0] == 4 && BASH_VERSINFO[1] > 0
 	)); then
+		# printf -v to an array index is available in bash >= 4.1.
+		# Use it if available, as -o filenames is semantically
+		# incorrect if we are not actually completing filenames, and it
+		# has side effects (e.g. adds trailing slash to candidates
+		# matching present dirs).
 		local i
 		for i in ${!COMPREPLY[*]}; do
 			printf -v "COMPREPLY[i]" %q "${COMPREPLY[i]}"
 		done
+
+		# We can use "compopt -o noquote" available in bash >= 4.3 to
+		# prevent further quoting by the shell, which would be
+		# unexpectedly applied when a quoted result matches a filename.
+		if ((
+			BASH_VERSINFO[0] > 4 || \
+			BASH_VERSINFO[0] == 4 && BASH_VERSINFO[1] >= 3
+		)); then
+			compopt -o noquote
+		fi
 	else
 		compopt -o filenames
 	fi
@@ -66,7 +84,7 @@ _bat() {
 				printf "%s\n" "$lang"
 			done
 		)" -- "$cur"))
-                __bat_escape_completions
+		__bat_escape_completions
 		return 0
 		;;
 	-H | --highlight-line | \
@@ -76,9 +94,11 @@ _bat() {
 	-m | --map-syntax | \
 	--ignored-suffix | \
 	--list-themes | \
+	--squeeze-limit | \
 	--line-range | \
 	-L | --list-languages | \
 	--lessopen | \
+	--no-paging | \
 	--diagnostic | \
 	--acknowledgements | \
 	-h | --help | \
@@ -99,6 +119,22 @@ _bat() {
 		COMPREPLY=($(compgen -W "auto never character" -- "$cur"))
 		return 0
 		;;
+	--binary)
+		COMPREPLY=($(compgen -W "no-printing as-text" -- "$cur"))
+		return 0
+		;;
+	--nonprintable-notation)
+		COMPREPLY=($(compgen -W "unicode caret" -- "$cur"))
+		return 0
+		;;
+	--strip-ansi)
+		COMPREPLY=($(compgen -W "auto never always" -- "$cur"))
+		return 0
+		;;
+	--completion)
+		COMPREPLY=($(compgen -W "bash fish zsh ps1" -- "$cur"))
+		return 0
+		;;
 	--color | --decorations | --paging)
 		COMPREPLY=($(compgen -W "auto never always" -- "$cur"))
 		return 0
@@ -113,8 +149,15 @@ _bat() {
 		;;
 	--theme)
 		local IFS=$'\n'
+		COMPREPLY=($(compgen -W "auto${IFS}auto:always${IFS}auto:system${IFS}dark${IFS}light${IFS}$("$1" --list-themes)" -- "$cur"))
+		__bat_escape_completions
+		return 0
+		;;
+	--theme-dark | \
+	--theme-light)
+		local IFS=$'\n'
 		COMPREPLY=($(compgen -W "$("$1" --list-themes)" -- "$cur"))
-                __bat_escape_completions
+		__bat_escape_completions
 		return 0
 		;;
 	--style)
@@ -133,7 +176,7 @@ _bat() {
 			numbers
 			snip
 		)
-                # shellcheck disable=SC2016
+		# shellcheck disable=SC2016
 		if declare -F _comp_delimited >/dev/null 2>&1; then
 			# bash-completion > 2.11
 			_comp_delimited , -W '"${styles[@]}"'
@@ -149,6 +192,8 @@ _bat() {
 		# --unbuffered excluded intentionally (no-op)
 		COMPREPLY=($(compgen -W "
 			--show-all
+			--nonprintable-notation
+			--binary
 			--plain
 			--language
 			--highlight-line
@@ -157,6 +202,7 @@ _bat() {
 			--diff-context
 			--tabs
 			--wrap
+			--chop-long-lines
 			--terminal-width
 			--number
 			--color
@@ -164,23 +210,34 @@ _bat() {
 			--decorations
 			--force-colorization
 			--paging
+			--no-paging
 			--pager
 			--map-syntax
 			--ignored-suffix
 			--theme
+			--theme-dark
+			--theme-light
 			--list-themes
+			--squeeze-blank
+			--squeeze-limit
+			--strip-ansi
 			--style
 			--line-range
 			--list-languages
 			--lessopen
+			--completion
 			--diagnostic
 			--acknowledgements
+			--set-terminal-title
 			--help
 			--version
 			--cache-dir
 			--config-dir
 			--config-file
 			--generate-config-file
+			--no-config
+			--no-custom-assets
+			--no-lessopen
 		" -- "$cur"))
 		return 0
 	fi
